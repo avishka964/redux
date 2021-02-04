@@ -1,36 +1,32 @@
+import * as actionType from "../actions"
+
 const initialState = {
   counter: 0,
-  results: [],
 }
 
 const reducer = (state = initialState, action) => {
   /* eslint-disable */
 
   switch (action.type) {
-    case "INCREMENT":
+    case actionType.INCREMENT:
       const newState = Object.assign({}, state)
       newState.counter = state.counter + 1
       return newState
 
-    case "DECREMENT":
+    case actionType.DECREMENT:
       return {
         ...state,
         counter: state.counter - 1,
       }
-    case "ADD":
+    case actionType.ADD:
       return {
         ...state,
         counter: state.counter + action.val,
       }
-    case "SUBTRACT":
+    case actionType.SUBTRACT:
       return {
         ...state,
         counter: state.counter - action.val,
-      }
-    case "STORE_RESULT":
-      return {
-        ...state,
-        results: state.results.concat({ id: new Date(), value: state.counter }),
       }
   }
 
