@@ -7,6 +7,7 @@ import App from "./App"
 import registerServiceWorker from "./registerServiceWorker"
 import counterReducer from "./store/reducers/counter"
 import resultReducer from "./store/reducers/result"
+import thunk from "redux-thunk"
 
 const rootReducer = combineReducers({
   ctr: counterReducer,
@@ -17,7 +18,6 @@ const logger = (store) => {
   return (next) => {
     return (action) => {
       console.log("[Middleware] Dispatching ", action)
-      next(action)
       const result = next(action)
       console.log("[Middleware] next state", store.getState())
       return result
@@ -27,7 +27,10 @@ const logger = (store) => {
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const store = createStore(rootReducer, composeEnhances(applyMiddleware(logger)))
+const store = createStore(
+  rootReducer,
+  composeEnhances(applyMiddleware(logger, thunk))
+)
 
 ReactDOM.render(
   <Provider store={store}>
